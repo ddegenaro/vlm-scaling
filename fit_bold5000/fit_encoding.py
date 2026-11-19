@@ -3,15 +3,12 @@ Fit ridge encoding models: features from EVERY vision-transformer layer of the
 VisualGPTNeoX vision encoder -> BOLD5000 ROI responses, for every checkpoint
 matched by MODEL_DIR.
 
-    python fit_encoding.py CSI1
-
 MODEL_DIR may contain a wildcard (".../step_*"): each matching checkpoint
 folder gets its own report  <REPORT_DIR>/<subject>_<checkpoint>.tsv  and its own
 per-voxel arrays under  <ARRAY_DIR>/<subject>/<checkpoint>/.
 Checkpoints whose .tsv already exists are skipped, so an interrupted sweep can
 simply be re-run.
 """
-import argparse
 import csv
 import glob
 import os
@@ -36,7 +33,7 @@ MODEL_DIR = "/cs-data-01/drd92/pythia-vlms/7/step_*"      # a single checkpoint 
 MODEL_CODE_DIR = "/home/drd92/vlm-scaling"
 ARRAY_DIR = "/cs-data-01/drd92/fit_bold5000/arrays"
 REPORT_DIR = "/home/drd92/vlm-scaling/fit_bold5000/reports"
-DEVICE = "cuda:2"
+DEVICE = "cuda:3"
 BATCH_SIZE = 512        # images per forward pass; lower it if the GPU runs out of memory
 POOLING = "cls+mean"   # how each layer's tokens become one vector: "cls", "mean", "cls+mean", or "grid2"
 ROIS = ["EarlyVis", "LOC", "OPA", "PPA", "RSC"]           # each uses LH<roi> + RH<roi>
@@ -255,6 +252,5 @@ def main(subject):
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("subject", choices=["CSI1", "CSI2", "CSI3", "CSI4"])
-    main(ap.parse_args().subject)
+    for subject in ["CSI1", "CSI2", "CSI3", "CSI4"]:
+        main(subject)
