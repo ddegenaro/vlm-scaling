@@ -2,5 +2,4 @@ __pycache__/
 .vscode/
 logs/
 sweep_results/
-fit_bold5000/reports/
 fit_bold5000/trial_lists/
