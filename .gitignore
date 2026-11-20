@@ -3,3 +3,4 @@ __pycache__/
 logs/
 sweep_results/
 fit_bold5000/trial_lists/
+*.DS_Store
